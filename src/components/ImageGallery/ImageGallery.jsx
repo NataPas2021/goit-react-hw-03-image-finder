@@ -4,6 +4,9 @@ import css from './ImageGallery.module.css';
 import PropTypes, { shape } from 'prop-types';
 
 class ImageGallery extends Component {
+  State = {
+    images: [],
+  }
 componentDidUpdate() {
  console.log('component did update')
 }
@@ -11,7 +14,7 @@ componentDidUpdate() {
 render(){
   return (
     <ul className={css.ImageGallery} >
-      {this.props.images}
+      {this.props.searchQuery}
       {/*{this.props.images.map(image=> {
         return <ImageGalleryItem image={image}/>
       })}*/}

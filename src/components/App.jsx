@@ -26,7 +26,7 @@ export class App extends Component {
 };*/
 
   componentDidUpdate() {
-
+  /*мысли вслух: при апдейте(изменения в стейте searchQuery, необходимо сделать фетч и записать его результаты в state.images*/ 
 }
   
 
@@ -41,7 +41,7 @@ export class App extends Component {
         {this.state.isLoading && <p>Loading...</p>}
         {this.setState.images && <div>There will be images</div>}
         <SearchBar onSubmit={this.handleFormSubmit}/>
-        <ImageGallery images={this.state.images} />
+        <ImageGallery searchQuery={this.state.searchQuery} />
         <Button text="Load more"/>
         <ToastContainer />
       </div>
