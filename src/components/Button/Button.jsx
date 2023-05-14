@@ -1,9 +1,9 @@
 import css from './Button.module.css';
 import PropTypes from 'prop-types';
 
-const Button = () => {
+const Button = ({text}) => {
 return (
-    console.log('there vill be my Button')
+    <button className={css.button} type='button'>{text}</button>
 )
 };
 

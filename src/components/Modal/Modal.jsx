@@ -3,7 +3,11 @@ import PropTypes from 'prop-types';
 
 const Modal = () => {
     return (
-        console.log('there will be Modal')
+        <div className={css.overlay}>
+           <div className={css.modal}>
+             <img src="" alt="" />
+           </div>
+       </div>
     )
 }
 

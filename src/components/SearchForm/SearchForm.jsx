@@ -7,9 +7,26 @@ class SearchForm extends Component {
 
  }
 
+ onSubmit () {
+  
+ }
+
  render () {
     return (
-        console.log('there will be Form')
+    <>
+      <form className={css.searchForm}>
+         <button type="submit" className={css.searchFormButton} onSubmit={this.onSubmit}>
+           <span className={css.searchFormButtonLabel}>Search</span>
+         </button>
+         <input
+           className={css.searchFormInput}
+           type="text"
+           autoComplete="off"
+           autoFocus
+           placeholder="Search images and photos"
+        />
+      </form>
+    </>
     )
  }
 }

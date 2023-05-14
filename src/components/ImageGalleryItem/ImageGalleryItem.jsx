@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 const ImageGalleryItem = () => {
     return (
-        <li class="gallery-item">
-           <img src="" alt="" />
+        <li className={css.imageGalleryItem}>
+           <img className={css.image}src="" alt="" />
        </li>
     )
 }
