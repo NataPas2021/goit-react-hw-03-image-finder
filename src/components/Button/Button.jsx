@@ -10,5 +10,5 @@ return (
 export default Button;
 
 Button.propTypes = {
-
+  text: PropTypes.string.isRequired,
 }

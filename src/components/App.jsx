@@ -1,3 +1,5 @@
+import {ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {Component} from 'react';
 import css from './App.module.css';
 import SearchBar from './SearchBar/SearchBar';
@@ -8,27 +10,29 @@ import Button from './Button/Button';
 
 export class App extends Component {
   state = {
-    images: null,
+    images: [],
+    searchQuery: '',
     error: null,
     status: 'idle',
     isLoading: false,
   }
-
-  componentDidMount() {
+ 
+ /* componentDidMount() {
     this.setState({islLoading: true})
     fetch('https://pixabay.com/api/?q=cat&page=1&key=28539221-d5e0309a6fde535568a0abe02&image_type=photo&orientation=horizontal&per_page=12')
        .then(response => response.json())
        .then(images => this.setState(images))
        .finally(() => this.setState({isLoading: false}))
-};
+};*/
 
   componentDidUpdate() {
 
 }
   
 
-  handleFormSubmit = images => {
-    this.setState({images})
+  handleFormSubmit = searchQuery => {
+    this.setState({searchQuery})
+    
   }
   render () {
     
@@ -39,6 +43,7 @@ export class App extends Component {
         <SearchBar onSubmit={this.handleFormSubmit}/>
         <ImageGallery images={this.state.images} />
         <Button text="Load more"/>
+        <ToastContainer />
       </div>
     );
   }
