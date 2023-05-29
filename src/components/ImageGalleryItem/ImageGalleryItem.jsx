@@ -1,24 +1,25 @@
 //import {Component} from 'react';
 import css from './ImageGalleryItem.module.css';
 import PropTypes from 'prop-types';
-import Modal from 'components/Modal/Modal';
 
-const ImageGalleryItem = ({id, webformatURL, largeImageURL}) => {
+const ImageGalleryItem = ({webURL, largeImg, tags, openModal}) => {
     return (
-        <div> key={id}
-         <li className={css.imageGalleryItem}>
-           <img className={css.image} src={webformatURL} alt="" />
-           <Modal imageUrl={largeImageURL}/>
+        <> 
+         <li className={css.imageGalleryItem} >
+           <img className={css.image} 
+           src={webURL}
+           alt={tags}
+           onClick={() => openModal(largeImg, tags)} />
          </li>
-        </div>
-        
+        </>
     )
 }
 
 export default ImageGalleryItem;
 
 ImageGalleryItem.propTypes = {
- id: PropTypes.array.isRequired,
- webformatURL: PropTypes.node.isRequired,
- largeImageURL: PropTypes.node.isRequired,
+ webURL: PropTypes.string.isRequired,
+ openModal: PropTypes.func.isRequired,
+ largeImg: PropTypes.string.isRequired,
+ tags: PropTypes.string.isRequired,
 }

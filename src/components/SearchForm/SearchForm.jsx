@@ -36,6 +36,7 @@ class SearchForm extends Component {
          </button>
          <input
            className={css.searchFormInput}
+           name="imageSearchInput"
            type="text"
            autoComplete="off"
            autoFocus

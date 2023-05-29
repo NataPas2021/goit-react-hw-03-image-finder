@@ -1,48 +1,98 @@
-import {ToastContainer} from 'react-toastify';
+import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {Component} from 'react';
 import css from './App.module.css';
 import SearchBar from './SearchBar/SearchBar';
 import ImageGallery from './ImageGallery/ImageGallery';
 import Button from './Button/Button';
+import {fetchSearchedImages, imageValues} from './services/api';
+import Modal from './Modal/Modal';
+import { InfinitySpin } from 'react-loader-spinner'
 
 export class App extends Component {
   state = {
     images: [],
     searchQuery: '',
     isLoading: false,
+    error: null,
+    currentPage: 1,
+    showModal: false,
+    largeImageURL: '',
+    tags: '',
   }
-  
-  async componentDidMount() {
-    this.setState({isLoading: true});
 
-     await fetch(`https://pixabay.com/api/?page=1&key=28539221-d5e0309a6fde535568a0abe02&image_type=photo&orientation=horizontal&per_page=12`)
-     .then(res => { 
-      if(res.ok) {
-      return res.json()}
+ async componentDidUpdate(prevProps, prevState) {
+    const prevSearch = prevState.searchQuery;
+    const nextSearch = this.state.searchQuery;
+    const prevCurrentPage = prevState.currentPage;
+    const currentPage = this.state.currentPage;
+   if(prevSearch !== nextSearch || prevCurrentPage !== currentPage) {
+    
+    try {
+      this.setState({isLoading: true, error: null});
+      const {hits, totalHits} = await fetchSearchedImages(nextSearch, currentPage)
+
+      if(totalHits === 0) {
+        toast.warn('Unfortunately, we didnt find any pictures. Please, try another query');
+      }
       
-      return Promise.reject(new Error('Ooops, something went wrong. Please, add search request'))
-    })
-    .then(data => this.setState({images: data.hits}))
-    .catch(error => this.setState({error}))
-    //.finally(this.setState({loading: false}));
-    console.log('component did mount')
-  }
-
-  
+      const newImages = imageValues(hits);
+      this.setState(({ images }) => ({
+        images: [...images, ...newImages],
+        totalHits,
+      }));
+    } catch(error) {
+      this.setState({
+        error: 'Ooops, something went wrong. Please reload page',
+      })
+    } finally {
+      this.setState({isLoading: false});
+    }   
+ }
+} 
 
   handleFormSubmit = searchQuery => {
     this.setState({searchQuery})  
   }
 
+  onLoadMore = () => {
+    this.setState(prevState => ({
+      currentPage: prevState.currentpPage + 1,
+    }));
+    console.log(this.state.currentPage)
+  }
+  
+  toggleModal = () => {
+    this.setState(({showModal}) => ({
+      showModal: !showModal,
+    })
+    )
+  }
+
+  openModal = (largeImageURL, tags) => {
+   this.toggleModal();
+   this.setState({
+    largeImageURL,
+    tags,
+  })
+  }
+
   render () {
-    const {images, searchQuery} = this.state;
+    const {isLoading, images, error, largeImageURL, showModal,tags} = this.state;
     
     return (
       <div className={css.container}>
         <SearchBar onSubmit={this.handleFormSubmit}/>
-        <ImageGallery images={images} searchQuery={searchQuery}/>
-        <Button text="Load more"/>
+        {isLoading &&
+          <InfinitySpin width='200' color="#008080"/>}
+        {images &&
+          <ImageGallery images={images} openModal={this.openModal}/>}
+        {images.length !== 0 && 
+          <Button text="Load more" onClick={this.onLoadMore}/>} 
+        {showModal && 
+          <Modal imageUrl={largeImageURL} tags={tags} onClickModal={this.toggleModal}/>}
+        {error && 
+          <p>{error.message}</p>}
         <ToastContainer />
       </div>
     );
