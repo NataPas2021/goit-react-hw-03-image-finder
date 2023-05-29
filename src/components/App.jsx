@@ -30,8 +30,8 @@ export class App extends Component {
     
     try {
       this.setState({isLoading: true, error: null});
-      const {hits, totalHits} = await fetchSearchedImages(nextSearch, currentPage)
-
+      const {hits, totalHits} = await fetchSearchedImages(nextSearch, currentPage);
+       console.log(this.state.images);
       if(totalHits === 0) {
         toast.warn('Unfortunately, we didnt find any pictures. Please, try another query');
       }
@@ -57,7 +57,7 @@ export class App extends Component {
 
   onLoadMore = () => {
     this.setState(prevState => ({
-      currentPage: prevState.currentpPage + 1,
+      currentPage: prevState.currentPage + 1,
     }));
     console.log(this.state.currentPage)
   }
