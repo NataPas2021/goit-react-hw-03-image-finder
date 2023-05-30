@@ -1,5 +1,4 @@
 .container {
-    height: 100vh;
     display: grid;
     grid-template-columns: 1fr;
     grid-gap: 16px;
@@ -8,4 +7,5 @@
     align-items: center;
     font-size: 40;
     color: #010101;
+    
   }

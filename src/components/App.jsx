@@ -27,11 +27,11 @@ export class App extends Component {
     const prevCurrentPage = prevState.currentPage;
     const currentPage = this.state.currentPage;
    if(prevSearch !== nextSearch || prevCurrentPage !== currentPage) {
-    
+    console.log(this.state.currentPage)
     try {
       this.setState({isLoading: true, error: null});
       const {hits, totalHits} = await fetchSearchedImages(nextSearch, currentPage);
-       console.log(this.state.images);
+       
       if(totalHits === 0) {
         toast.warn('Unfortunately, we didnt find any pictures. Please, try another query');
       }
@@ -52,14 +52,16 @@ export class App extends Component {
 } 
 
   handleFormSubmit = searchQuery => {
-    this.setState({searchQuery})  
+    this.setState({
+      searchQuery,
+      currentPage: 1,
+      images: ''})  
   }
 
   onLoadMore = () => {
     this.setState(prevState => ({
       currentPage: prevState.currentPage + 1,
     }));
-    console.log(this.state.currentPage)
   }
   
   toggleModal = () => {
