@@ -5,7 +5,7 @@ import css from './App.module.css';
 import SearchBar from './SearchBar/SearchBar';
 import ImageGallery from './ImageGallery/ImageGallery';
 import Button from './Button/Button';
-import {fetchSearchedImages, imageValues} from './services/api';
+import { fetchSearchedImages, imageValues } from 'services/api';
 import Modal from './Modal/Modal';
 import { InfinitySpin } from 'react-loader-spinner'
 
@@ -27,7 +27,6 @@ export class App extends Component {
     const prevCurrentPage = prevState.currentPage;
     const currentPage = this.state.currentPage;
    if(prevSearch !== nextSearch || prevCurrentPage !== currentPage) {
-    console.log(this.state.currentPage)
     try {
       this.setState({isLoading: true, error: null});
       const {hits, totalHits} = await fetchSearchedImages(nextSearch, currentPage);
@@ -52,10 +51,13 @@ export class App extends Component {
 } 
 
   handleFormSubmit = searchQuery => {
+    const stateSearchQuery = this.state.searchQuery
+    if(searchQuery !== stateSearchQuery) {
     this.setState({
       searchQuery,
       currentPage: 1,
       images: ''})  
+    }
   }
 
   onLoadMore = () => {

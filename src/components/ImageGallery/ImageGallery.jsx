@@ -1,6 +1,6 @@
 import ImageGalleryItem from 'components/ImageGalleryItem/ImageGalleryItem';
 import css from './ImageGallery.module.css';
-import PropTypes, { shape } from 'prop-types';
+import PropTypes from 'prop-types';
 
 
 
@@ -20,6 +20,13 @@ return (
 export default ImageGallery;
 
 ImageGallery.propTypes = {
- images: PropTypes.arrayOf(shape).isRequired,
+ images: PropTypes.arrayOf(
+  PropTypes.shape({
+  id: PropTypes.number.isRequired,
+  webformatURL: PropTypes.string.isRequired,
+  tags: PropTypes.string.isRequired,
+  largeImageURL: PropTypes.string.isRequired,
+})
+).isRequired,
  openModal: PropTypes.func.isRequired,
 }
